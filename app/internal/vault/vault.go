@@ -2,9 +2,10 @@ package vault
 
 import (
 	"fmt"
-	"log"
+	"os"
 	"time"
 
+	"github.com/charmbracelet/log"
 	vaultApi "github.com/hashicorp/vault/api"
 	"github.com/vertisan/vault-snapshot-agent/internal/config"
 )
@@ -20,8 +21,6 @@ func (v *Vault) NewClient(config *config.VaultConfig) error {
 		vaultConfig.Address = config.Address
 	}
 
-	// Disable TLS?
-
 	api, err := vaultApi.NewClient(vaultConfig)
 	if err != nil {
 		return err
@@ -33,12 +32,11 @@ func (v *Vault) NewClient(config *config.VaultConfig) error {
 }
 
 func (v *Vault) SetClientToken(config *config.VaultConfig) error {
+	approle := "approle"
 	data := map[string]interface{}{
 		"role_id":   config.RoleId,
 		"secret_id": config.SecretId,
 	}
-
-	approle := "approle"
 
 	if config.Approle != "" {
 		approle = config.Approle
@@ -59,8 +57,8 @@ func (v *Vault) IsLeader() bool {
 	leader, err := v.API.Sys().Leader()
 
 	if err != nil {
-		log.Println(err.Error())
-		log.Fatalln("Cannot determine leader instance! Vault Snapshotter will run only on the current leader node.")
+		log.Error("Cannot determine leader instance! Vault Snapshotter will run only on the current leader node.", "err", err)
+		os.Exit(1)
 	}
 
 	return leader.IsSelf

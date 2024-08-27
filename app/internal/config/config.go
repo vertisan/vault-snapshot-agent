@@ -1,9 +1,9 @@
 package config
 
 import (
-	"log"
 	"os"
 
+	"github.com/charmbracelet/log"
 	"gopkg.in/yaml.v3"
 )
 
@@ -20,30 +20,30 @@ type VaultConfig struct {
 }
 
 type StorageConfig struct {
-	Local LocalStorageConfig `yaml:"local"` // omitempty if another storage is enabled
+	Local LocalStorageConfig `yaml:"local,omitempty"`
 }
 
 type LocalStorageConfig struct {
 	Path string `yaml:"path"`
 }
 
-func ReadConfig() (*Configuration, error) {
-	// TODO: Allow to be passed from CLI
-	// file := "/etc/vault.d/vault-snapshot-agent.yaml"
-	file := "./.local-data/vault-snapshot-agent.yaml"
+const (
+	DefaultConfigPath = "/etc/vault.d/vault-snapshot-agent.yaml"
+)
 
-	fileContent, err := os.ReadFile(file)
+func ReadConfig(configPath string) (*Configuration, error) {
+	fileContent, err := os.ReadFile(configPath)
 	if err != nil {
-		log.Fatalf("Cannot read configuration from file at '%s': %v", file, err.Error())
+		log.Fatalf("Cannot read configuration: %v", err)
 	}
 
 	config := &Configuration{}
 	err = yaml.Unmarshal(fileContent, &config)
 	if err != nil {
-		log.Fatalf("Cannot parse configuration: %v", err.Error())
+		log.Fatalf("Cannot parse configuration: %v", err)
 	}
 
-	log.Println("Configuration has been loaded!")
+	log.Debug("Configuration has been loaded!")
 
 	return config, nil
 }

@@ -10,13 +10,12 @@ type Snapshot struct {
 }
 
 func NewSnapshot(config *config.Configuration) (*Snapshot, error) {
-	snapshotter := &Snapshot{}
+	snapshot := &Snapshot{}
 
-	// Initialize Vault
-	err := snapshotter.Vault.NewClient(&config.Vault)
+	err := snapshot.Vault.NewClient(&config.Vault)
 	if err != nil {
 		return nil, err
 	}
 
-	return snapshotter, nil
+	return snapshot, nil
 }
