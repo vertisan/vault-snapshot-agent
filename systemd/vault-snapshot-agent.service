@@ -1,0 +1,6 @@
+# /etc/systemd/system/vault-snapshot-agent.service
+[Unit]
+Description=Vault Snapshot Agent
+
+[Service]
+ExecStart=/path/to/vault-snapshot-agent/
