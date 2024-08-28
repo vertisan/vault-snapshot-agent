@@ -1,0 +1,11 @@
+# /etc/systemd/system/vault-snapshot-agent.timer
+[Unit]
+Description=Run Vault Snapshot Agent every full hour
+
+[Timer]
+# Every full hour, i.e. 01:00, 02:00, etc.
+OnCalendar=*-*-* *:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
