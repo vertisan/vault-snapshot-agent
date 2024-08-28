@@ -26,6 +26,6 @@ func (s *Snapshot) IsOnLeader() bool {
 	return s.Vault.IsLeader()
 }
 
-func (s *Snapshot) SnapVaultRaft(snapWriter io.Writer) error {
+func (s *Snapshot) SnapRaft(snapWriter io.Writer) error {
 	return s.Vault.API.Sys().RaftSnapshot(snapWriter)
 }
