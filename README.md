@@ -31,8 +31,8 @@ Example:
 ```yaml
 vault:
   addr: "https://127.0.0.1:8200"
-  roleId: "05dd3d65-2333-e794-392f-74d387721372"
-  secretId: "88936f9e-8ba4-3158-2832-e78788dbc595"
+  roleId: "05dd3d65-1523-e794-392f-74d387721372"
+  secretId: "88936f9e-8ba4-0032-2832-e78788dbc595"
   approle: "approle"
 storage:
   local:

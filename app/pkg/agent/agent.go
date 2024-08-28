@@ -33,11 +33,11 @@ func Agent(configPath string) {
 	}
 
 	log.Info("Waiting to obtain leadership...")
-	if snapshotAgent.Vault.IsLeader() {
+	if snapshotAgent.IsOnLeader() {
 		log.Info("Obtained leadership")
 
 		var raftData bytes.Buffer
-		err := snapshotAgent.Vault.API.Sys().RaftSnapshot(&raftData)
+		err := snapshotAgent.SnapVaultRaft(&raftData)
 		if err != nil {
 			log.Fatal("Unable to generate snapshot!", "err", err)
 		}

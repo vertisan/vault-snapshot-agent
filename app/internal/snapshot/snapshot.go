@@ -1,12 +1,14 @@
 package snapshot
 
 import (
+	"io"
+
 	"github.com/vertisan/vault-snapshot-agent/internal/config"
 	"github.com/vertisan/vault-snapshot-agent/internal/vault"
 )
 
 type Snapshot struct {
-	Vault vault.Vault
+	Vault *vault.Vault
 }
 
 func NewSnapshot(config *config.Configuration) (*Snapshot, error) {
@@ -18,4 +20,12 @@ func NewSnapshot(config *config.Configuration) (*Snapshot, error) {
 	}
 
 	return snapshot, nil
+}
+
+func (s *Snapshot) IsOnLeader() bool {
+	return s.Vault.IsLeader()
+}
+
+func (s *Snapshot) SnapVaultRaft(snapWriter io.Writer) error {
+	return s.Vault.API.Sys().RaftSnapshot(snapWriter)
 }
