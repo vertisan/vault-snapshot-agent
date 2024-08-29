@@ -16,7 +16,7 @@ env:
 
 jobs:
   goreleaser:
-    runs-on: ubuntu-20.04
+    runs-on: personal
     steps:
       - name: Checkout
         uses: actions/checkout@v4
