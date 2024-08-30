@@ -8,7 +8,7 @@ import (
 )
 
 type Snapshot struct {
-	Vault *vault.Vault
+	Vault vault.Vault
 }
 
 func NewSnapshot(config *config.Configuration) (*Snapshot, error) {
