@@ -3,4 +3,9 @@
 Description=Vault Snapshot Agent
 
 [Service]
-ExecStart=/path/to/vault-snapshot-agent/
+ExecStart=/usr/bin/vault-snapshot-agent
+User=vault
+Group=vault
+ProtectSystem=full
+ProtectHome=read-only
+NoNewPrivileges=yes
