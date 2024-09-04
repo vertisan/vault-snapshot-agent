@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/charmbracelet/log"
 	"github.com/vertisan/vault-snapshot-agent/internal/config"
 )
 
@@ -24,7 +25,10 @@ func (sm *Manager) SaveFile(data []byte) string {
 	fileName := fmt.Sprintf("vault-snapshot-%s.snap", t.Format("20060102150405"))
 
 	for _, storage := range sm.storages {
-		storage.SaveFile(fileName, data)
+		_, err := storage.SaveFile(fileName, data)
+		if err != nil {
+			log.Fatal("Cannot save file in storage:", "err", err)
+		}
 	}
 
 	return fileName

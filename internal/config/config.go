@@ -4,7 +4,6 @@ import (
 	"os"
 
 	"github.com/charmbracelet/log"
-	"gopkg.in/yaml.v3"
 )
 
 type Configuration struct {
@@ -31,16 +30,17 @@ const (
 	DefaultConfigPath = "/etc/vault.d/vault-snapshot-agent.yaml"
 )
 
-func ReadConfig(configPath string) (*Configuration, error) {
+func LoadConfig(configPath string) (*Configuration, error) {
 	fileContent, err := os.ReadFile(configPath)
 	if err != nil {
-		log.Fatalf("Cannot read configuration: %v", err)
+		log.Error("Cannot read configuration!", "err", err)
+		return nil, err
 	}
 
-	config := &Configuration{}
-	err = yaml.Unmarshal(fileContent, &config)
+	config, err := ParseConfigFile(fileContent)
 	if err != nil {
-		log.Fatalf("Cannot parse configuration: %v", err)
+		log.Error("Cannot parse configuration!", "err", err)
+		return nil, err
 	}
 
 	log.Debug("Configuration has been loaded!")
