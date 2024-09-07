@@ -68,9 +68,7 @@ func (sm *Manager) Cleanup(retention int) error {
 				return files[i].ModTime.After(files[j].ModTime)
 			})
 
-			files = files[retention:]
-
-			for _, file := range files {
+			for _, file := range files[retention:] {
 				err := s.Remove(file.Name)
 				if err != nil {
 					log.Error("Failed to remove file from storage!", "storage", s.Name(), "file", file.Name)
