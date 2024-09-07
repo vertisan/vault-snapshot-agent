@@ -3,6 +3,7 @@ package storage
 import (
 	"fmt"
 	"sort"
+	"sync"
 	"time"
 
 	"github.com/charmbracelet/log"
@@ -10,54 +11,74 @@ import (
 )
 
 type Manager struct {
-	storages []Storage
+    storages []Storage
 }
 
 func NewStorageManager(config *config.StorageConfig) (*Manager, error) {
-	storages, err := NewStorage(config)
-	if err != nil {
-		return nil, err
-	}
-	return &Manager{storages: storages}, nil
+    storages, err := NewStorage(config)
+    if err != nil {
+        return nil, err
+    }
+    return &Manager{storages: storages}, nil
 }
 
 func (sm *Manager) SaveFile(data []byte) string {
-	t := time.Now()
-	fileName := fmt.Sprintf("vault-snapshot-%s.snap", t.Format("20060102150405"))
+    t := time.Now()
+    fileName := fmt.Sprintf("vault-snapshot-%s.snap", t.Format("20060102150405"))
 
-	for _, storage := range sm.storages {
-		storage.Write(fileName, data)
-	}
+    var wg sync.WaitGroup
+    for _, storage := range sm.storages {
+        wg.Add(1)
+        go func(s Storage) {
+            defer wg.Done()
+            s.Write(fileName, data)
+        }(storage)
+    }
+    wg.Wait()
 
-	return fileName
+    return fileName
 }
 
 func (sm *Manager) Cleanup(retention int) error {
-	for _, storage := range sm.storages {
-		files, err := storage.List()
-		if err != nil {
-			log.Error("Cannot get files list from storage!", "storage")
-			return err
-		}
+    var wg sync.WaitGroup
+    var mu sync.Mutex
+    var firstErr error
 
-		if len(files) <= retention {
-			log.Debug("There are no old snapshots to be removed")
-			return nil
-		}
+    for _, storage := range sm.storages {
+        wg.Add(1)
+        go func(s Storage) {
+            defer wg.Done()
+            files, err := s.List()
+            if err != nil {
+                log.Error("Cannot get files list from storage!", "storage", s.Name())
+                mu.Lock()
+                if firstErr == nil {
+                    firstErr = err
+                }
+                mu.Unlock()
+                return
+            }
 
-		sort.Slice(files, func(i, j int) bool {
-			return files[i].ModTime.After(files[j].ModTime)
-		})
+            if len(files) <= retention {
+                log.Debug("There are no old snapshots to be removed", "storage", s.Name())
+                return
+            }
 
-		files = files[retention:]
+            sort.Slice(files, func(i, j int) bool {
+                return files[i].ModTime.After(files[j].ModTime)
+            })
 
-		for _, file := range files {
-			err := storage.Remove(file.Name)
-			if err != nil {
-				log.Error("Failed to remove file from storage!", "storage", storage.Name(), "file", file.Name)
-			}
-		}
-	}
+            files = files[retention:]
 
-	return nil
+            for _, file := range files {
+                err := s.Remove(file.Name)
+                if err != nil {
+                    log.Error("Failed to remove file from storage!", "storage", s.Name(), "file", file.Name)
+                }
+            }
+        }(storage)
+    }
+    wg.Wait()
+
+    return firstErr
 }
