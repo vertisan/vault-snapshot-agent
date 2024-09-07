@@ -9,10 +9,17 @@ import (
 	"github.com/vertisan/vault-snapshot-agent/pkg/agent"
 )
 
+var version = "dev"
+
+func GetVersion() string {
+	return version
+}
+
 func main() {
 	app := cli.NewApp()
 	app.Name = "vault-snapshot-agent"
 	app.Description = "A custom Vault Agent for managing snapshots automatically."
+	app.Version = GetVersion()
 	app.Flags = []cli.Flag{
 		&cli.StringFlag{
 			Name:    "config",
