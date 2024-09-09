@@ -43,8 +43,15 @@ func Agent(configPath string) {
 		}
 
 		fileName := storageManager.SaveFile(raftData.Bytes())
-
 		log.Info("Saved snapshot", "fileName", fileName)
+
+		if c.Storage.Retention > 0 {
+			log.Info("Removing old snapshots...")
+
+			if err := storageManager.Cleanup(c.Storage.Retention); err != nil {
+				log.Error("Cannot clean up storage(s) from older snapshots!", "err", err.Error())
+			}
+		}
 	} else {
 		log.Info("Snapshot agent is not running on leader node, skipping ...")
 	}

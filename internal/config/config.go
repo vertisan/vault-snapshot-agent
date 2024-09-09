@@ -19,7 +19,8 @@ type VaultConfig struct {
 }
 
 type StorageConfig struct {
-	Local LocalStorageConfig `yaml:"local,omitempty"`
+	Retention int                `yaml:"retention,omitempty"`
+	Local     LocalStorageConfig `yaml:"local,omitempty"`
 }
 
 type LocalStorageConfig struct {

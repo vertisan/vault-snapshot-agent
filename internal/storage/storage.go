@@ -1,24 +1,40 @@
 package storage
 
 import (
-	"errors"
+	"strings"
+	"time"
 
+	"github.com/charmbracelet/log"
 	"github.com/vertisan/vault-snapshot-agent/internal/config"
 )
 
 type Storage interface {
-	SaveFile(fileName string, data []byte) (string, error)
+	Name() string
+	Write(fileName string, data []byte) (string, error)
+	Remove(fileName string) error
+	List() ([]FileInfo, error)
+}
+
+type FileInfo struct {
+	Name    string
+	ModTime time.Time
+	Size    int64
 }
 
 func NewStorage(config *config.StorageConfig) ([]Storage, error) {
 	var storages []Storage
+	var storageNames []string
 
 	if config.Local.Path != "" {
-		storages = append(storages, &LocalStorageDriver{Path: config.Local.Path})
+		storage := &LocalStorageDriver{Path: config.Local.Path}
+		storages = append(storages, storage)
+		storageNames = append(storageNames, storage.Name())
 	}
 
 	if len(storages) == 0 {
-		return nil, errors.New("there are no configured storages")
+		log.Fatalf("There are no configured storages!")
+	} else {
+		log.Infof("Configured storages: %s", strings.Join(storageNames, ", "))
 	}
 
 	return storages, nil

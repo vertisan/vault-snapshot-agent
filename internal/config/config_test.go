@@ -21,6 +21,7 @@ vault:
   secretId: "test-secret-id"
   approle: "test-approle"
 storage:
+  retention: 3
   local:
     path: "/tmp/vault-backup"
 `
@@ -49,6 +50,7 @@ abc: 123
 		assert.Equal(t, "test-secret-id", configData.Vault.SecretId)
 		assert.Equal(t, "test-approle", configData.Vault.Approle)
 		assert.Equal(t, "/tmp/vault-backup", configData.Storage.Local.Path)
+		assert.Equal(t, 3, configData.Storage.Retention)
 	})
 
 	t.Run("Load non-existent configuration file", func(t *testing.T) {

@@ -4,12 +4,11 @@ A custom Vault Agent for managing snapshots automatically.
 
 ## Features
 
-- [ ] Notifications - Sending notifications on failure to Webhook address
-- [ ] Scheduling - Running agent without an external Cron support
-- [ ] Retention - Keeping only the last N snapshots on selected storage(s)
+- (TBD) Scheduling - Running agent without an external Cron support
+- Retention - Keeping only the last N snapshots
 - Storage - Destination storages for created snapshots.
-    - [X] Local
-    - [ ] GCS
+    - Local
+    - (TBD) GCS
 
 ## Configuration
 
@@ -21,6 +20,8 @@ A custom Vault Agent for managing snapshots automatically.
 - `approle` - Approle name used to authenticate in Vault API. Defaults to `approle`.
 
 ### Storage
+
+- `retention` - The number of snapshots to retain.
 
 #### Local Path
 
@@ -35,6 +36,7 @@ vault:
   secretId: "88936f9e-8ba4-0032-2832-e78788dbc595"
   approle: "approle"
 storage:
+  retention: 10
   local:
     path: "/mnt/vault-snapshots"
 ```
