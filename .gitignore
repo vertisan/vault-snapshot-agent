@@ -1,3 +1,4 @@
 vault-snapshot-agent
 dist/
 .coverage/
+unit-tests.xml

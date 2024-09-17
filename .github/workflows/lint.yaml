@@ -8,10 +8,14 @@ on:
   workflow_dispatch:
 
 env:
-  GO_VERSION: "1.22"
+  GO_VERSION: 1.22
+  GOLANGCI_LINT_VERSION: v1.61
+
+permissions:
+  contents: read
 
 jobs:
-  release:
+  linter:
     runs-on: personal
     steps:
       - name: Checkout
@@ -27,9 +31,64 @@ jobs:
       - name: Check & format go.mod
         run: go mod tidy
 
-      # Run linter and tests
+      - name: Linter
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: ${{ env.GOLANGCI_LINT_VERSION }}
 
-      - name: Check GoReleaser requirements
+      - name: GoReleaser requirements
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          version: '~> v2'
+          args: healthcheck
+
+      - name: Validate .goreleaser.yaml
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          version: '~> v2'
+          args: check
+
+  tests:
+    runs-on: personal
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          go get .
+
+      - name: Test
+        run: go run gotest.tools/gotestsum@latest --junitfile unit-tests.xml --format pkgname
+
+      - name: Test Summary
+        uses: test-summary/action@v2
+        with:
+          paths: "unit-tests.xml"
+        if: success()
+
+
+  go-releaser:
+    runs-on: personal
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: GoReleaser requirements
         uses: goreleaser/goreleaser-action@v6
         with:
           version: '~> v2'
