@@ -1,9 +1,6 @@
 name: Lint & Test
 
 on:
-  push:
-    branches:
-      - '*'
   pull_request:
   workflow_dispatch:
 
@@ -48,6 +45,7 @@ jobs:
           version: '~> v2'
           args: check
 
+
   tests:
     runs-on: personal
     steps:
@@ -61,10 +59,6 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
 
-      - name: Install dependencies
-        run: |
-          go get .
-
       - name: Test
         run: go run gotest.tools/gotestsum@latest --junitfile unit-tests.xml --format pkgname
 
@@ -72,7 +66,7 @@ jobs:
         uses: test-summary/action@v2
         with:
           paths: "unit-tests.xml"
-        if: success()
+        if: always()
 
 
   go-releaser:
