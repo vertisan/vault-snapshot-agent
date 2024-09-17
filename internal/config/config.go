@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/charmbracelet/log"
+	"github.com/vertisan/vault-snapshot-agent/internal/utils"
 )
 
 type Configuration struct {
@@ -38,7 +39,7 @@ func LoadConfig(configPath string) (*Configuration, error) {
 		return nil, err
 	}
 
-	config, err := ParseConfigFile(fileContent)
+	config, err := utils.ParseYamlData[Configuration](fileContent)
 	if err != nil {
 		log.Error("Cannot parse configuration!", "err", err)
 		return nil, err

@@ -1,4 +1,4 @@
-package config
+package utils
 
 import (
 	"bytes"
@@ -9,8 +9,8 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func ParseConfigFile(data []byte) (*Configuration, error) {
-	config := &Configuration{}
+func ParseYamlData[T any](data []byte) (*T, error) {
+	config := new(T)
 
 	decoder := yaml.NewDecoder(bytes.NewReader(data))
 	decoder.KnownFields(true)
