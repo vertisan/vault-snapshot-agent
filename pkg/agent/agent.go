@@ -16,7 +16,7 @@ func Agent(configPath string) {
 
 	log.Debug("Loading configuration ...")
 
-	c, err := config.ReadConfig(configPath)
+	c, err := config.LoadConfig(configPath)
 	if err != nil {
 		log.Fatal("Cannot load configuration!", "err", err)
 	}

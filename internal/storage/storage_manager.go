@@ -29,9 +29,14 @@ func (sm *Manager) SaveFile(data []byte) string {
 	var wg sync.WaitGroup
 	for _, storage := range sm.storages {
 		wg.Add(1)
+
 		go func(s Storage) {
 			defer wg.Done()
-			s.Write(fileName, data)
+
+			_, err := s.Write(fileName, data)
+			if err != nil {
+				log.Error("Failed to save file to storage!", "storage", s.Name(), "file", fileName)
+			}
 		}(storage)
 	}
 	wg.Wait()
@@ -48,6 +53,7 @@ func (sm *Manager) Cleanup(retention int) error {
 		wg.Add(1)
 		go func(s Storage) {
 			defer wg.Done()
+
 			files, err := s.List()
 			if err != nil {
 				log.Error("Cannot get files list from storage!", "storage", s.Name())
