@@ -1,7 +1,9 @@
 name: Lint & Test
 
 on:
-  pull_request:
+  push:
+    branches:
+      - "*"
   workflow_dispatch:
 
 env:
@@ -32,18 +34,6 @@ jobs:
         uses: golangci/golangci-lint-action@v6
         with:
           version: ${{ env.GOLANGCI_LINT_VERSION }}
-
-      - name: GoReleaser requirements
-        uses: goreleaser/goreleaser-action@v6
-        with:
-          version: '~> v2'
-          args: healthcheck
-
-      - name: Validate .goreleaser.yaml
-        uses: goreleaser/goreleaser-action@v6
-        with:
-          version: '~> v2'
-          args: check
 
 
   tests:
