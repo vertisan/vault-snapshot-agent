@@ -22,10 +22,16 @@ type VaultConfig struct {
 type StorageConfig struct {
 	Retention int                `yaml:"retention,omitempty"`
 	Local     LocalStorageConfig `yaml:"local,omitempty"`
+	GCS       GCSStorageConfig   `yaml:"gcs,omitempty"`
 }
 
 type LocalStorageConfig struct {
 	Path string `yaml:"path"`
+}
+
+type GCSStorageConfig struct {
+	Bucket string `yaml:"bucket"`
+	Prefix string `yaml:"prefix,omitempty"`
 }
 
 const (

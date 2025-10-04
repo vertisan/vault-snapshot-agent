@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  GO_VERSION: 1.22
+  GO_VERSION: 1.24
   GOLANGCI_LINT_VERSION: v1.61
 
 permissions:
@@ -35,7 +35,6 @@ jobs:
         with:
           version: ${{ env.GOLANGCI_LINT_VERSION }}
 
-
   tests:
     runs-on: ubuntu-latest
     steps:
@@ -58,7 +57,6 @@ jobs:
           paths: "unit-tests.xml"
         if: always()
 
-
   go-releaser:
     runs-on: ubuntu-latest
     steps:
@@ -75,11 +73,11 @@ jobs:
       - name: GoReleaser requirements
         uses: goreleaser/goreleaser-action@v6
         with:
-          version: '~> v2'
+          version: "~> v2"
           args: healthcheck
 
       - name: Validate .goreleaser.yaml
         uses: goreleaser/goreleaser-action@v6
         with:
-          version: '~> v2'
+          version: "~> v2"
           args: check

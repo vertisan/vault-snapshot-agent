@@ -3,7 +3,6 @@ name: Semantic Release
 on:
   push:
     branches:
-      - main
       - master
   workflow_dispatch:
 
@@ -25,20 +24,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install semantic-release and plugins
         run: |
           npm install -g semantic-release@24 \
-            @semantic-release/changelog@6 \
-            @semantic-release/git@10 \
             @semantic-release/github@10 \
             @semantic-release/commit-analyzer@13 \
             @semantic-release/release-notes-generator@14 \
             conventional-changelog-conventionalcommits@8
 
       - name: Run semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
-
