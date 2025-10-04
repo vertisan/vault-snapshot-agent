@@ -47,7 +47,11 @@ func (g *GCSStorageDriver) Write(fileName string, data []byte) (string, error) {
 	writer := obj.NewWriter(g.ctx)
 
 	if _, err := writer.Write(data); err != nil {
-		writer.Close()
+		if err := writer.Close(); err != nil {
+			log.Error("Cannot close GCS writer!", "err", err.Error())
+			return "", err
+		}
+
 		log.Error("Cannot write to GCS!", "err", err.Error())
 		return "", err
 	}
