@@ -7,8 +7,8 @@ A custom Vault Agent for managing snapshots automatically.
 - (TBD) Scheduling - Running agent without an external Cron support
 - Retention - Keeping only the last N snapshots
 - Storage - Destination storages for created snapshots.
-    - Local
-    - GCS (Google Cloud Storage)
+  - Local
+  - GCS (Google Cloud Storage)
 
 ## Configuration
 
@@ -32,7 +32,9 @@ A custom Vault Agent for managing snapshots automatically.
 - `bucket` - The name of the GCS bucket where snapshots will be stored.
 - `prefix` - (Optional) A prefix/folder path within the bucket for organizing snapshots, e.g. `vault-snapshots` or `backups/vault`.
 
-Example with Local storage:
+## Examples
+
+### Local storage
 
 ```yaml
 vault:
@@ -46,7 +48,7 @@ storage:
     path: "/mnt/vault-snapshots"
 ```
 
-Example with GCS storage:
+### Google Cloud Storage
 
 ```yaml
 vault:
@@ -61,7 +63,7 @@ storage:
     prefix: "production"
 ```
 
-Example with both Local and GCS storage:
+### Mixed
 
 ```yaml
 vault:
@@ -76,4 +78,18 @@ storage:
   gcs:
     bucket: "my-vault-snapshots"
     prefix: "production"
+```
+
+## Development
+
+### Running Tests
+
+```bash
+go test ./...
+```
+
+### Linting
+
+```bash
+golangci-lint run
 ```
