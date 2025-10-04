@@ -16,14 +16,14 @@ func (l *LocalStorageDriver) Name() string {
 	return "local"
 }
 
-func (l *LocalStorageDriver) Write(fileName string, data []byte) string {
+func (l *LocalStorageDriver) Write(fileName string, data []byte) (string, error) {
 	fullPath := fmt.Sprintf("%s/%s", l.Path, fileName)
 
 	if err := os.WriteFile(fullPath, data, 0400); err != nil {
 		log.Fatal("Cannot save file!", "err", err.Error())
 	}
 
-	return fullPath
+	return fullPath, nil
 }
 
 func (l *LocalStorageDriver) Remove(fileName string) error {

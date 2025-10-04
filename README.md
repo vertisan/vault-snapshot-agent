@@ -7,8 +7,8 @@ A custom Vault Agent for managing snapshots automatically.
 - (TBD) Scheduling - Running agent without an external Cron support
 - Retention - Keeping only the last N snapshots
 - Storage - Destination storages for created snapshots.
-    - Local
-    - (TBD) GCS
+  - Local
+  - (TBD) GCS
 
 ## Configuration
 
@@ -40,3 +40,27 @@ storage:
   local:
     path: "/mnt/vault-snapshots"
 ```
+
+## Development
+
+### Running Tests
+
+```bash
+go test ./...
+```
+
+### Linting
+
+```bash
+golangci-lint run
+```
+
+## CI/CD
+
+This project uses GitHub Actions for continuous integration and automated releases:
+
+- **Lint & Test**: Runs linting and tests on all branches
+- **Semantic Release**: Automatically creates releases based on conventional commits (runs on main/master)
+- **Release**: Builds and publishes binaries when tags are created
+
+For more information about the release process, see [docs/SEMANTIC_RELEASE.md](docs/SEMANTIC_RELEASE.md).

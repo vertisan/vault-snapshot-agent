@@ -10,7 +10,7 @@ import (
 
 type Storage interface {
 	Name() string
-	Write(fileName string, data []byte) string
+	Write(fileName string, data []byte) (string, error)
 	Remove(fileName string) error
 	List() ([]FileInfo, error)
 }
