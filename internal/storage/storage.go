@@ -31,6 +31,16 @@ func NewStorage(config *config.StorageConfig) ([]Storage, error) {
 		storageNames = append(storageNames, storage.Name())
 	}
 
+	if config.GCS.Bucket != "" {
+		storage, err := NewGCSStorageDriver(config.GCS.Bucket, config.GCS.Prefix)
+		if err != nil {
+			log.Error("Cannot initialize GCS storage!", "err", err.Error())
+			return nil, err
+		}
+		storages = append(storages, storage)
+		storageNames = append(storageNames, storage.Name())
+	}
+
 	if len(storages) == 0 {
 		log.Fatalf("There are no configured storages!")
 	} else {
