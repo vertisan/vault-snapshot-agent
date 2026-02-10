@@ -8,7 +8,7 @@ require (
 	cloud.google.com/go/storage v1.57.0
 	github.com/charmbracelet/log v0.4.0
 	github.com/hashicorp/vault/api v1.14.0
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
 	github.com/urfave/cli/v2 v2.27.4
 	google.golang.org/api v0.247.0
 	gopkg.in/yaml.v3 v3.0.1
