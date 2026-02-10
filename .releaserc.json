@@ -6,30 +6,21 @@
         "preset": "conventionalcommits",
         "releaseRules": [
           {"type": "build", "release": "patch"},
-          {"type": "chore", "scope": "deps", "release": "patch"}
         ]
       }
     ],
-    [
-      "@semantic-release/release-notes-generator",
-      {
-        "preset": "conventionalcommits",
-        "presetConfig": {
-          "types": [
-            {"type": "feat", "section": "Features"},
-            {"type": "fix", "section": "Bug Fixes"},
-            {"type": "build", "section": "Dependencies", "hidden": false},
-            {"type": "chore", "section": "Maintenance", "hidden": false},
-            {"type": "docs", "section": "Documentation", "hidden": false},
-            {"type": "perf", "section": "Performance Improvements", "hidden": false},
-            {"type": "refactor", "section": "Code Refactoring", "hidden": false},
-            {"type": "test", "section": "Tests", "hidden": false}
-          ]
-        }
-      }
-    ],
+    "@semantic-release/release-notes-generator",
     "@semantic-release/github"
   ],
   "preset": "conventionalcommits",
-  "tagFormat": "${version}"
+  "tagFormat": "${version}",
+  "branches": [
+    {
+      "name": "master"
+    },
+    {
+      "name": "develop",
+      "prerelease": true
+    }
+  ]
 }
