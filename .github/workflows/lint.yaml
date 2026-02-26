@@ -68,13 +68,13 @@ jobs:
           go-version: ${{ env.GO_VERSION }}
 
       - name: GoReleaser requirements
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@v7
         with:
           version: "~> v2"
           args: healthcheck
 
       - name: Validate .goreleaser.yaml
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@v7
         with:
           version: "~> v2"
           args: check
