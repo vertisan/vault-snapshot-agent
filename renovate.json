@@ -26,24 +26,24 @@
         "digest"
       ],
       "groupName": "go-minor-patch-digest",
-      "autoMerge": true,
-      "autoMergeType": "pr",
-      "autoMergeStrategy": "squash",
-      "commitMessageType": "build(deps)",
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "squash",
+      "commitMessagePrefix": "build(deps)",
       "semanticCommits": "enabled",
-      "stabilityDays": 7
+      "minimumReleaseAge": "7 days"
     },
     {
       "matchDatasources": [
         "github-actions"
       ],
       "groupName": "github-actions",
-      "autoMerge": true,
-      "autoMergeType": "pr",
-      "autoMergeStrategy": "squash",
-      "commitMessageType": "ci",
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "squash",
+      "commitMessagePrefix": "ci",
       "semanticCommits": "enabled",
-      "stabilityDays": 7
+      "minimumReleaseAge": "7 days"
     }
   ]
 }
