@@ -1,0 +1,49 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "timezone": "Europe/Warsaw",
+  "schedule": [
+    "after 9am on monday"
+  ],
+  "minimumReleaseAge": "7 days",
+  "prCreation": "not-pending",
+  "packageRules": [
+    {
+      "description": "Go MINOR, PATCH, DIGEST dependencies (auto-merge)",
+      "matchDatasources": [
+        "go"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest"
+      ],
+      "groupName": "go-minor-patch-digest",
+      "autoMerge": true,
+      "autoMergeType": "pr",
+      "autoMergeStrategy": "squash",
+      "commitMessageType": "build(deps)",
+      "semanticCommits": "enabled",
+      "stabilityDays": 7
+    },
+    {
+      "matchDatasources": [
+        "github-actions"
+      ],
+      "groupName": "github-actions",
+      "autoMerge": true,
+      "autoMergeType": "pr",
+      "autoMergeStrategy": "squash",
+      "commitMessageType": "ci",
+      "semanticCommits": "enabled",
+      "stabilityDays": 7
+    }
+  ]
+}
