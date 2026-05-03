@@ -13,7 +13,7 @@
     "after 9am on monday"
   ],
   "minimumReleaseAge": "7 days",
-  "prCreation": "not-pending",
+  "prHourlyLimit": 10,
   "packageRules": [
     {
       "description": "Go MINOR, PATCH, DIGEST dependencies (auto-merge)",
