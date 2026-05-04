@@ -8,6 +8,7 @@ require (
 	github.com/hashicorp/vault/api v1.23.0
 	github.com/stretchr/testify v1.11.1
 	github.com/urfave/cli/v2 v2.27.7
+	github.com/urfave/cli/v3 v3.8.0
 	google.golang.org/api v0.277.0
 	gopkg.in/yaml.v3 v3.0.1
 )
