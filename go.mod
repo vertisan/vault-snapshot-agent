@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	cloud.google.com/go/storage v1.62.1
-	github.com/charmbracelet/log v1.0.0
+	github.com/charmbracelet/log/v2 v2.0.0
 	github.com/hashicorp/vault/api v1.23.0
 	github.com/stretchr/testify v1.11.1
 	github.com/urfave/cli/v2 v2.27.7
