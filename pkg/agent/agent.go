@@ -3,7 +3,7 @@ package agent
 import (
 	"bytes"
 
-	"github.com/charmbracelet/log"
+	"charm.land/log/v2"
 
 	"github.com/vertisan/vault-snapshot-agent/internal/config"
 	"github.com/vertisan/vault-snapshot-agent/internal/logger"

@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"cloud.google.com/go/storage"
-	"github.com/charmbracelet/log"
+	"charm.land/log/v2"
 	"google.golang.org/api/iterator"
 )
 

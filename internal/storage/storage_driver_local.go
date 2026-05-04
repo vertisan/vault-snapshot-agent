@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/charmbracelet/log"
+	"charm.land/log/v2"
 )
 
 type LocalStorageDriver struct {
