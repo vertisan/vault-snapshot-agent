@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/charmbracelet/log"
+	"charm.land/log/v2"
 	vaultApi "github.com/hashicorp/vault/api"
 	"github.com/vertisan/vault-snapshot-agent/internal/config"
 )

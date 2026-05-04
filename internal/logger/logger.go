@@ -1,6 +1,6 @@
 package logger
 
-import "github.com/charmbracelet/log"
+import "charm.land/log/v2"
 
 func NewLogger() {
 	// TODO: Allow debug to be enabled from CLI
