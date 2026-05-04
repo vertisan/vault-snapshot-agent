@@ -34,19 +34,19 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check GoReleaser requirements
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@1a80836c5c9d9e5755a25cb59ec6f45a3b5f41a8 # v7
         with:
           version: "~> v2"
           args: healthcheck
 
       - name: Validate .goreleaser.yaml
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@1a80836c5c9d9e5755a25cb59ec6f45a3b5f41a8 # v7
         with:
           version: "~> v2"
           args: check
 
       - name: Release binaries
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@1a80836c5c9d9e5755a25cb59ec6f45a3b5f41a8 # v7
         with:
           version: "~> v2"
           args: release --clean --parallelism 3
