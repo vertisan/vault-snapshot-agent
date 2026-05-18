@@ -3,6 +3,7 @@
   "extends": [
     "config:recommended",
     ":semanticCommits",
+    ":semanticCommitTypeAll(fix)",
     "helpers:pinGitHubActionDigests"
   ],
   "labels": [
@@ -29,7 +30,6 @@
       "automerge": true,
       "automergeType": "pr",
       "automergeStrategy": "squash",
-      "commitMessagePrefix": "fix(deps)",
       "semanticCommits": "enabled",
       "minimumReleaseAge": "7 days"
     },
