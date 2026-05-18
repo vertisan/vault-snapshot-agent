@@ -4,9 +4,8 @@ A custom Vault Agent for managing snapshots automatically.
 
 ## Features
 
-- (TBD) Scheduling - Running agent without an external Cron support
 - Retention - Keeping only the last N snapshots
-- Storage - Destination storages for created snapshots.
+- Storage - Destination storage for created snapshots.
   - Local
   - GCS (Google Cloud Storage)
 
