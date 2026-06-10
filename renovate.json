@@ -3,7 +3,6 @@
   "extends": [
     "config:recommended",
     ":semanticCommits",
-    ":semanticCommitTypeAll(fix)",
     "helpers:pinGitHubActionDigests"
   ],
   "labels": [
@@ -14,7 +13,7 @@
     "after 9am on monday"
   ],
   "minimumReleaseAge": "7 days",
-  "prHourlyLimit": 10,
+  "prHourlyLimit": 20,
   "packageRules": [
     {
       "description": "Go MINOR, PATCH, DIGEST dependencies (auto-merge)",
@@ -30,10 +29,12 @@
       "automerge": true,
       "automergeType": "pr",
       "automergeStrategy": "squash",
+      "semanticCommitType": "fix",
       "semanticCommits": "enabled",
       "minimumReleaseAge": "7 days"
     },
     {
+      "description": "GitHub Actions updates (auto-merge)",
       "matchDatasources": [
         "github-actions"
       ],
@@ -41,7 +42,7 @@
       "automerge": true,
       "automergeType": "pr",
       "automergeStrategy": "squash",
-      "commitMessagePrefix": "ci",
+      "semanticCommitType": "ci",
       "semanticCommits": "enabled",
       "minimumReleaseAge": "7 days"
     }
