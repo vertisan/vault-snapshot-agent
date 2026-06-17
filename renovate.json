@@ -35,9 +35,7 @@
     },
     {
       "description": "GitHub Actions updates (auto-merge)",
-      "matchDatasources": [
-        "github-actions"
-      ],
+      "matchDepTypes": ["action"],
       "groupName": "github-actions",
       "automerge": true,
       "automergeType": "pr",
