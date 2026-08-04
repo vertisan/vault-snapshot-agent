@@ -6,10 +6,10 @@ on:
     types: [published]
 
 permissions:
-  contents: write # create the GitHub release and upload its assets
-  packages: write # push images to ghcr.io
-  id-token: write # OIDC token for cosign keyless signing and attestations
-  attestations: write # write SLSA build provenance attestations
+  contents: write
+  packages: write
+  id-token: write # cosign keyless
+  attestations: write
 
 concurrency:
   group: release-${{ github.event.release.tag_name || github.ref }}

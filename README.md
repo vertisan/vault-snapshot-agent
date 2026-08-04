@@ -23,8 +23,9 @@ verify it before use — see [Verifying releases](#verifying-releases).
 
 ### Container image
 
-Multi-arch images (`linux/amd64`, `linux/arm64`, `linux/arm/v7`) are published to
-GitHub Container Registry:
+Multi-arch images (`linux/amd64`, `linux/arm64`) are published to GitHub Container
+Registry, built on the distroless
+[Project Hummingbird](https://hummingbird-project.io) `core-runtime` base:
 
 ```bash
 docker run --rm \
