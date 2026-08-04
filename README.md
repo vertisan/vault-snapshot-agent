@@ -79,6 +79,12 @@ storage:
     prefix: "production"
 ```
 
+## Design Decisions
+
+Architectural decisions are recorded in [`docs/adr/`](docs/adr).
+
+- [ADR 0001: Self-update mechanism](docs/adr/0001-self-update-mechanism.md)
+
 ## Development
 
 ### Running Tests
