@@ -184,13 +184,20 @@ quantity rather than a blank cheque.
 
 ### CLI surface
 
-Register subcommands on the existing `urfave/cli` v3 root command in `main.go`, keeping the root
-`Action` so a bare `vault-snapshot-agent` still takes a snapshot (backwards compatibility).
+Register subcommands alongside the existing `run` command on the `urfave/cli` v3 root command in
+`main.go`. As of v2 the snapshot action is the explicit `run` subcommand and a bare
+`vault-snapshot-agent` prints help and exits non-zero, so these slot in without further
+restructuring:
 
 ```
+vault-snapshot-agent run     [-c FILE]
 vault-snapshot-agent version [--check]
 vault-snapshot-agent update  [--check] [--dry-run] [--version=X] [--force] [--yes] [--allow-prerelease]
 ```
+
+Note that root flags are inherited by subcommands by default in urfave/cli v3 — the field is
+`Local bool`, and its zero value means *persistent*. `--config` therefore reaches any new
+subcommand for free, though `version` and `update` should not need it.
 
 ### Release discovery
 

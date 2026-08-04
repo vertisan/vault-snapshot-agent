@@ -2,6 +2,31 @@
 
 A custom Vault Agent for managing snapshots automatically.
 
+## Usage
+
+```bash
+vault-snapshot-agent run [-c FILE]
+```
+
+`run` takes a single snapshot and exits — it is not a daemon. Schedule it with the systemd timer in
+[`docs/systemd`](docs/systemd). The agent asks Vault whether the local node is the leader and does
+nothing on followers, so the same unit is safe to install on every node.
+
+The configuration path defaults to `/etc/vault.d/vault-snapshot-agent.yaml` and can be overridden
+with `-c` / `--config` or the `VAULT_SNAPSHOT_AGENT_CONFIG` environment variable.
+
+### Upgrading to v2
+
+`run` is now required. Previously a bare `vault-snapshot-agent` took a snapshot; it now prints help
+and exits non-zero, so update your unit file:
+
+```diff
+-ExecStart=/usr/bin/vault-snapshot-agent
++ExecStart=/usr/bin/vault-snapshot-agent run
+```
+
+Configuration is unchanged.
+
 ## Features
 
 - Retention - Keeping only the last N snapshots

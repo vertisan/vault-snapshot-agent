@@ -3,7 +3,7 @@
 Description=Vault Snapshot Agent
 
 [Service]
-ExecStart=/usr/bin/vault-snapshot-agent
+ExecStart=/usr/bin/vault-snapshot-agent run
 User=vault
 Group=vault
 ProtectSystem=full
