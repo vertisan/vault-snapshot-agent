@@ -79,6 +79,11 @@ storage:
     prefix: "production"
 ```
 
+## Restoring from a snapshot
+
+Snapshots are regular Vault Integrated Storage (Raft) snapshots, restored with `vault operator raft snapshot restore`.
+See [docs/RESTORE.md](docs/RESTORE.md) for the full procedure, including restore scenarios and seal-specific steps for Shamir key shares, GCP Cloud KMS, AWS KMS, Azure Key Vault, Transit and HSM (PKCS#11).
+
 ## Development
 
 ### Running Tests
